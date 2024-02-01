@@ -43,7 +43,7 @@
                     <a href="javascript:void(0);" class="waves-effect"><i class="ti-agenda"></i> <span> Master
                             Data </span> <span class="pull-right"><i class="mdi mdi-plus"></i></span></a>
                     <ul class="list-unstyled">
-                        <li><a href="master-gedung.html">Gedung / Tower</a></li>
+                        <li><a href="{{ route('gedung.index') }}">Gedung / Tower</a></li>
                         <li><a href="master-parkir.html">Member parkir</a></li>
                         <li><a href="master-ipl.html">IPL</a></li>
                     </ul>

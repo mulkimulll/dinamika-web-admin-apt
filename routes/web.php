@@ -31,6 +31,14 @@ Route::group(['prefix' => 'penghuni', 'as' => 'penghuni.'], function () {
     Route::post('/add', 'Penghuni\PenghuniController@add')->name('add');
 });
 
+// master data
+// gedung
+Route::group(['prefix' => 'gedung', 'as' => 'gedung.'], function () {
+    Route::get('/', 'Gedung\GedungController@index')->name('index');
+    Route::post('/getdata', 'Gedung\GedungController@getdata')->name('getdata');
+    Route::post('/add', 'Gedung\GedungController@add')->name('add');
+});
+
 // parkir
 Route::get('/parkir', 'Parkir\ParkirController@index')->name('parkir');
 

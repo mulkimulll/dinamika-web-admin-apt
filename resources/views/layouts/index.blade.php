@@ -24,6 +24,9 @@
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css">
+    {{-- sweeetalert --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.4/dist/sweetalert2.min.css">
+    
     @yield('css')
 </head>
 
@@ -82,6 +85,9 @@
     <script src="{{ asset('assets/pages/dashborad.js') }}"></script>
 
     <script src="{{ asset('assets/js/app.js') }}"></script>
+
+    {{-- sweetalert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.4/dist/sweetalert2.all.min.js"></script>
 
     @yield('js')
 </body>
