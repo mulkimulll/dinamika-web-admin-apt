@@ -37,6 +37,7 @@ Route::group(['prefix' => 'gedung', 'as' => 'gedung.'], function () {
     Route::get('/', 'Gedung\GedungController@index')->name('index');
     Route::post('/getdata', 'Gedung\GedungController@getdata')->name('getdata');
     Route::post('/add', 'Gedung\GedungController@add')->name('add');
+    Route::delete('/delete/{id?}', 'Gedung\GedungController@delete')->name('delete');
 });
 
 // parkir

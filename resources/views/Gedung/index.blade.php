@@ -91,10 +91,51 @@
 @section('js')
 <script type="text/javascript">
     var table,tabledata,table_index;
+    
+    function deleteData(e,code){
+            var token = '{{ csrf_token() }}';
+            Swal.fire({
+                title: "Apakah Anda yakin?",
+                text: "Data akan terhapus!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Ya",
+                cancelButtonText:"Batal",
+                confirmButtonColor: "#ec6c62",
+                closeOnConfirm: false
+            }).then(function(result) {
+                console.log(result)
+                if (result.value) {
+                    $.ajaxSetup({
+                        headers: { "X-CSRF-Token" : $("meta[name=csrf-token]").attr("content") }
+                    });
+                    $.ajax({
+                        type: 'delete',
+                        url: '{{route("gedung.delete")}}/' + code,
+                        headers: {'X-CSRF-TOKEN': token},
+                        success: function(data){
+                        console.log(data)
+                        if (data.status == 'success') {
+                            Swal.fire('Yes',data.message,'success');
+                            table.ajax.reload(null, true);
+                        }else{
+                            Swal.fire('Ups',data.message,'info');
+                        }
+                    },
+                    error: function(data){
+                        console.log(data);
+                        Swal.fire("Ups!", "Terjadi kesalahan pada sistem.", "error");
+                    }});
+                }
+            });
+        }
+
     $(document).ready(function () {
         // $(".btn-refresh").click(function() {
         //     table.ajax.reload();
         // });
+
         $.ajaxSetup({
             headers: {
                 "X-CSRF-Token": $("meta[name=csrf-token]").attr("content")
