@@ -39,8 +39,8 @@ class PenghuniController extends Controller
             $result->code              = $result->code;
             $result->nama              = $result->nama;
             $result->alamat            = $result->tower .'lt.'. $result->lantai.'room.'. $result->room;
-            $result->created_at        = date('d/m/Y', strtotime($result->created_at));
-            $result->status            = $this->statusLabel($result->status);
+            $result->created_at        = $result->created_at;
+            $result->status            = $this->statusLabel($result->status_pemilik);
             $result->action            = '
             <a href="' . route('penghuni.dtl', $result->code) . '" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
             <a href="' . route('penghuni.edit', $result->code) . '" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i></a>
@@ -78,6 +78,7 @@ class PenghuniController extends Controller
             $penghuni->tgl_lahir = $req->tgl_lahir;
             $penghuni->no_telp = $req->telp;
             $penghuni->agama = $req->agama;
+            $penghuni->status_pemilik = $req->statu_pemilik;
             $penghuni->status = $req->status;
             $penghuni->tower = $req->tower;
             $penghuni->lantai = $req->lantai;
@@ -135,8 +136,10 @@ class PenghuniController extends Controller
     private function statusLabel($status) {
         if ($status == 1) {
             $data = '<span class="badge badge-success">Pemilik</span>';
-        } else {
+        } elseif ($status == 2) {
             $data = '<span class="badge badge-info">Penyewa</span>';
+        } else {
+            $data = '<span class="badge badge-info">-</span>';
         }
         
         return $data;

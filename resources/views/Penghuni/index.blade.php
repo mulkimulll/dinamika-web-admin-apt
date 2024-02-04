@@ -101,14 +101,29 @@
                             <option value="budha">Budha</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="">Status Penghuni </label>
-                        <select class="form-control" name="status" id="" required>
-                            <option value="">-- Pilih --</option>
-                            <option value="1">Pemilik</option>
-                            <option value="2">Sewa</option>
-                        </select>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Status Pemilik Penghuni </label>
+                                <select class="form-control" name="statu_pemilik" id="" required>
+                                    <option value="">-- Pilih --</option>
+                                    <option value="1">Pemilik</option>
+                                    <option value="2">Sewa</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="">Status Aktif Penghuni </label>
+                                <select class="form-control" name="status" id="" required>
+                                    <option value="">-- Pilih --</option>
+                                    <option value="1">Aktif</option>
+                                    <option value="2">Non Aktif</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
+                    
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
