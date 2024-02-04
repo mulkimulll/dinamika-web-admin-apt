@@ -63,32 +63,33 @@
                 <h4 class="modal-title" id="myModalLabel">Tambah Data Penghuni</h4>
             </div>
             <div class="modal-body">
-                <form id="saveDataForm">
+                <form id="saveDataForm" enctype="multipart/form-data">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <div class="form-group">
                         <label for="">Nama</label>
-                        <input type="text" class="form-control" name="nama" placeholder="Masukkan Nama">
+                        <input type="text" class="form-control" name="nama" placeholder="Masukkan Nama" required>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Tempat lahir</label>
-                                <input type="text" class="form-control" name="tmpt_lahir" placeholder="Tempat lahir">
+                                <input type="text" class="form-control" name="tmpt_lahir" placeholder="Tempat lahir" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Tgl Lahir</label>
-                                <input type="date" class="form-control" name="tgl_lahir">
+                                <input type="date" class="form-control" name="tgl_lahir" required>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="">Email</label>
-                        <input type="email" class="form-control" name="email" placeholder="Masukkan Email">
+                        <input type="email" class="form-control" name="email" placeholder="Masukkan Email" required>
                     </div>
                     <div class="form-group">
                         <label for="">Nomor Telp </label>
-                        <input type="number" class="form-control" name="telp" placeholder="08XXXXXXXX">
+                        <input type="number" class="form-control" name="telp" placeholder="08XXXXXXXX" required>
                     </div>
                     <div class="form-group">
                         <label for="">Agama </label>
@@ -102,7 +103,7 @@
                     </div>
                     <div class="form-group">
                         <label for="">Status Penghuni </label>
-                        <select name="" class="form-control" name="status" id="">
+                        <select class="form-control" name="status" id="" required>
                             <option value="">-- Pilih --</option>
                             <option value="1">Pemilik</option>
                             <option value="2">Sewa</option>
@@ -112,7 +113,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Tower</label>
-                                <select name="" class="form-control" name="tower" id="">
+                                <select class="form-control" name="tower" id="" required>
                                     <option value="">-- Pilih --</option>
                                     @foreach($tower as $gedung)
                                     <option value="{{$gedung->id}}">{{ $gedung->nama }}</option>
@@ -123,18 +124,18 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Lantai</label>
-                                <select name="" class="form-control" name="lantai" id="">
+                                <select class="form-control" name="lantai" id="" required>
                                     <option value="">-- Pilih --</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">Room</label>
-                                <input type="text" class="form-control" name="room">
+                                <input type="text" class="form-control" name="room" required>
                             </div>
 
                         </div>
@@ -143,13 +144,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">NIK KTP</label>
-                                <input type="text" class="form-control" name="ktp" placeholder="367400XXXXXXXX">
+                                <input type="text" class="form-control" name="ktp" placeholder="367400XXXXXXXX" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Foto KTP</label>
-                                <input type="file" class="form-control" name="foto_ktp">
+                                <input type="file" class="form-control" id="foto_ktp" name="foto_ktp" required>
                             </div>
                         </div>
                     </div>
@@ -157,7 +158,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary waves-effect waves-light">Simpan</button>
+                <button type="button" id="simpan" class="btn btn-primary waves-effect waves-light">Simpan</button>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -166,11 +167,52 @@
 
 @section('js')
 <script type="text/javascript">
-    var table;
+    var table,tabledata,table_index;
+    
+    function deleteData(e,code){
+            var token = '{{ csrf_token() }}';
+            Swal.fire({
+                title: "Apakah Anda yakin?",
+                text: "Data akan terhapus!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Ya",
+                cancelButtonText:"Batal",
+                confirmButtonColor: "#ec6c62",
+                closeOnConfirm: false
+            }).then(function(result) {
+                console.log(result)
+                if (result.value) {
+                    $.ajaxSetup({
+                        headers: { "X-CSRF-Token" : $("meta[name=csrf-token]").attr("content") }
+                    });
+                    $.ajax({
+                        type: 'delete',
+                        url: '{{route("penghuni.delete")}}/' + code,
+                        headers: {'X-CSRF-TOKEN': token},
+                        success: function(data){
+                        console.log(data)
+                        if (data.status == 'success') {
+                            Swal.fire('Yes',data.message,'success');
+                            table.ajax.reload(null, true);
+                        }else{
+                            Swal.fire('Ups',data.message,'info');
+                        }
+                    },
+                    error: function(data){
+                        console.log(data);
+                        Swal.fire("Ups!", "Terjadi kesalahan pada sistem.", "error");
+                    }});
+                }
+            });
+        }
+
     $(document).ready(function () {
         // $(".btn-refresh").click(function() {
         //     table.ajax.reload();
         // });
+
         $.ajaxSetup({
             headers: {
                 "X-CSRF-Token": $("meta[name=csrf-token]").attr("content")
@@ -181,15 +223,11 @@
             fixedColumns: {
                 left: 2
             },
-            "pagingType": "full_numbers",
-            "pageLength": 10,
-            "processing": true,
-            "serverSide": true,
+            "pageLength": "10",
             "lengthMenu": [
                 [10, 25, 50, 100],
                 [10, 25, 50, 100]
             ],
-            "select": true,
             "ajax": {
                 "url": "{{ route('penghuni.getdata') }}",
                 "dataType": "json",
@@ -198,42 +236,24 @@
                     d._token = "{{ csrf_token() }}";
                 }
             },
-            "columns": [{
-                    "data": "no",
-                    "orderable": false,
+            "columns": [
+                {
+                    "data": "code"
                 },
                 {
-                    "data": "kabupaten"
+                    "data": "nama"
                 },
                 {
-                    "data": "jml_pusk"
+                    "data": "alamat"
                 },
                 {
-                    "data": "jml_workshop_assist"
+                    "data": "created_at"
                 },
                 {
-                    "data": "layanan_assist"
+                    "data": "status"
                 },
                 {
-                    "data": "skrinning_assist"
-                },
-                {
-                    "data": "peserta_skrinning_tahun"
-                },
-                {
-                    "data": "peserta_skrinning_kumulatif"
-                },
-                {
-                    "data": "ringan"
-                },
-                {
-                    "data": "sedang"
-                },
-                {
-                    "data": "berat"
-                },
-                {
-                    "data": "ipwl"
+                    "data": "action"
                 },
             ],
             responsive: true,
@@ -267,19 +287,47 @@
             ]
         });
 
-        $('#saveDataForm').submit(function(e) {
-            e.preventDefault();
+        $("#simpan").on('click',function(){
+            $('#simpan').addClass("disabled");
+                var form = $('#saveDataForm').serializeArray()
+                var files = $('#foto_ktp')[0].files;
+                var dataFile = new FormData()
 
+                dataFile.append('file',files[0]);
+
+                $.each(form, function(idx, val) {
+                    dataFile.append(val.name, val.value)
+                })
             $.ajax({
                 type: 'POST',
-                url: '{{ route("penghuni.add") }}',
-                data: $(this).serialize(),
-                success: function(res) {
-                    // code if success
-                    console.log(res);
+                url : "{{route('penghuni.add')}}",
+                headers: {'X-CSRF-TOKEN': $('[name="_token"]').val()},
+                data:dataFile,
+                processData: false,
+                contentType: false,
+                dataType: "json",
+                beforeSend: function () {
+                    Swal.showLoading();
                 },
-                error: function(error) {
-                    console.log(error.resJSON);
+                success: function(data){
+                    console.log(data);
+                    if (data.success) {
+                        Swal.fire('Yes',data.message,'info');
+                        window.location.replace('{{route("penghuni.index")}}');
+                    } else {
+                        Swal.fire('Ups',data.message,'info');
+                    }
+                    Swal.hideLoading();
+                },
+                complete: function () {
+                    Swal.hideLoading();
+                    $('#simpan').removeClass("disabled");
+                },
+                error: function(data){
+                    console.log(data);
+                    $('#simpan').removeClass("disabled");
+                    Swal.hideLoading();
+                    Swal.fire('Ups','Ada kesalahan pada sistem','info');
                 }
             });
         });

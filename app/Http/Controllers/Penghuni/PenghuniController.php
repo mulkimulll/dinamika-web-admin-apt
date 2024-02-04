@@ -16,25 +16,23 @@ class PenghuniController extends Controller
     public function index() {
         $tower = Gedung::select('id','nama','code')->get();
 
-        return view('penghuni.index',compact('tower'));
+        return view('Penghuni.index', compact('tower'));
     }
 
     public function getdata(request $req) {
         $limit = $req->length;
         $start = $req->start;
         $page  = $start + 1;
-        $search = $req->search['value'];
 
-        $dataquery  = Penghuni::with('getUser');
-        // return $dataquery->get();
+        $dataquery  = Penghuni::select("penghuni.*");
 
         $totalData = $dataquery->get()->count();
 
         $totalFiltered = $dataquery->get()->count();
 
         $dataquery->limit($limit);
-        $dataquery->offset($start);
         $data = $dataquery->get();
+
         foreach ($data as $key => $result) {
             $result->no                = $key + $page;
             $result->code              = $result->code;
@@ -42,7 +40,11 @@ class PenghuniController extends Controller
             $result->alamat            = $result->tower .'lt.'. $result->lantai.'room.'. $result->room;
             $result->created_at        = $result->created_at;
             $result->status            = $result->status;
-            $result->action            = '<button class="btn btn-sm btn-danger">Hapus</button>';
+            $result->action            = '
+            <a href="' . route('penghuni.dtl', $result->code) . '" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+            <a href="' . route('penghuni.edit', $result->code) . '" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i></a>
+            <a href="#" class="btn btn-sm btn-danger" onclick="deleteData(this, \'' . $result->code . '\')"><i class="fa fa-trash"></i></a>
+';
         }
 
         $json_data = array(
@@ -55,7 +57,8 @@ class PenghuniController extends Controller
     }
 
     public function add(request $req) {
-        $username = explode("", $req->nama)[0];
+        $username = explode(" ", $req->nama)[0];
+        $last = Penghuni::max('code') ?? 0;
 
         try {
             DB::beginTransaction();
@@ -67,6 +70,7 @@ class PenghuniController extends Controller
             $user->save();
             
             $penghuni = new Penghuni;
+            $penghuni->code = 'ST-'.date('d-m-y').'-'.$this->code($last + 1);
             $penghuni->user_id = $user->id;
             $penghuni->nama = $req->nama;
             $penghuni->tmpt_lahir = $req->tmpt_lahir;
@@ -79,7 +83,7 @@ class PenghuniController extends Controller
             $penghuni->room = $req->room;
             $penghuni->ktp = $req->ktp;
 
-            $image = $request->file('foto_ktp');
+            $image = $req->file('file');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
 
             // Save image to the 'public/images' directory
@@ -99,5 +103,31 @@ class PenghuniController extends Controller
                 "message"         => 'Gagal.'. $th->getMessage()
             );
         }
+
+        return json_encode($json_data); 
+    }
+
+    public function delete(request $req, $code)
+    {
+        try {
+            $penghuni        = Penghuni::where('code', $code)->first();
+            $penghuni->delete();
+
+            $json_data = array(
+                "status"         => 'success',
+                "message"         => 'Data berhasil dihapus.'
+            );
+        } catch (\Throwable $th) {
+            $json_data = array(
+                "success"         => 'gagal',
+                "message"         => $th->getMessage()
+            );
+        }
+        return response()->json($json_data);
+    }
+
+    function code($code) {
+        $data = str_pad($code, 4, '0', STR_PAD_LEFT);
+        return $data;
     }
 }
