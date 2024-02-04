@@ -10,6 +10,7 @@ use App\Models\Gedung;
 use App\User;
 use Auth;
 use DB;
+use Carbon\Carbon;
 
 class PenghuniController extends Controller
 {
@@ -38,8 +39,8 @@ class PenghuniController extends Controller
             $result->code              = $result->code;
             $result->nama              = $result->nama;
             $result->alamat            = $result->tower .'lt.'. $result->lantai.'room.'. $result->room;
-            $result->created_at        = $result->created_at;
-            $result->status            = $result->status;
+            $result->created_at        = date('d/m/Y', strtotime($result->created_at));
+            $result->status            = $this->statusLabel($result->status);
             $result->action            = '
             <a href="' . route('penghuni.dtl', $result->code) . '" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
             <a href="' . route('penghuni.edit', $result->code) . '" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i></a>
@@ -126,8 +127,18 @@ class PenghuniController extends Controller
         return response()->json($json_data);
     }
 
-    function code($code) {
+    private function code($code) {
         $data = str_pad($code, 4, '0', STR_PAD_LEFT);
+        return $data;
+    }
+
+    private function statusLabel($status) {
+        if ($status == 1) {
+            $data = '<span class="badge badge-success">Pemilik</span>';
+        } else {
+            $data = '<span class="badge badge-info">Penyewa</span>';
+        }
+        
         return $data;
     }
 }

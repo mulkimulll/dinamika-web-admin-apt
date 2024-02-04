@@ -22,6 +22,7 @@ class Penghuni extends Migration
             $table->date('tgl_lahir');
             $table->unsignedBigInteger('no_telp');
             $table->string('agama');
+            $table->integer('status_pemilik');
             $table->integer('status');
             $table->integer('tower');
             $table->integer('lantai');
