@@ -35,7 +35,11 @@ class GedungController extends Controller
             $result->alamat            = $result->tower .'lt.'. $result->total_lantai.'room.'. $result->total_room;
             $result->created_at        = $result->created_at;
             $result->status            = $result->status;
-            $result->action            = '<a href="#" class="btn btn-sm btn-danger" onclick="deleteData(this, \'' . $result->code . '\')"><i class="fa fa-trash"></i></a>';
+            $result->action            = '
+                        <a href="' . route('gedung.dtl', $result->code) . '" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                        <a href="' . route('gedung.edit', $result->code) . '" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i></a>
+                        <a href="#" class="btn btn-sm btn-danger" onclick="deleteData(this, \'' . $result->code . '\')"><i class="fa fa-trash"></i></a>
+            ';
         }
 
         $json_data = array(
@@ -70,6 +74,18 @@ class GedungController extends Controller
             );
         }
         return json_encode($json_data);
+    }
+
+    public function dtl($code) {
+        $gedung = Gedung::where('code', )->first();
+
+        return view('Gedung.dtl', compact('gedung'));
+    }
+
+    public function edit($code) {
+        $gedung = Gedung::where('code', )->first();
+
+        return view('Gedung.edit', compact('gedung'));
     }
 
     public function delete(request $req, $code)
