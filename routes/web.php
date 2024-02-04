@@ -46,6 +46,9 @@ Route::group(['prefix' => 'gedung', 'as' => 'gedung.'], function () {
 });
 
 // parkir
-Route::get('/parkir', 'Parkir\ParkirController@index')->name('parkir');
+Route::group(['prefix' => 'parkir', 'as' => 'parkir.'], function () {
+    Route::get('/', 'Parkir\ParkirController@index')->name('index');
+
+});
 
 
