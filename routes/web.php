@@ -28,7 +28,7 @@ Route::get('/dashboard', 'Dashboard\DashboardController@index')->name('dashboard
 Route::group(['prefix' => 'penghuni', 'as' => 'penghuni.'], function () {
     Route::get('/', 'Penghuni\PenghuniController@index')->name('index');
     Route::get('/dtl/{id}', 'Penghuni\PenghuniController@dtl')->name('dtl');
-    Route::get('/edit/{id}', 'Penghuni\PenghuniController@edit')->name('edit');
+    Route::post('/edit/{id}', 'Penghuni\PenghuniController@edit')->name('edit');
     Route::post('/getdata', 'Penghuni\PenghuniController@getdata')->name('getdata');
     Route::post('/add', 'Penghuni\PenghuniController@add')->name('add');
     Route::delete('/delete/{id?}', 'Penghuni\PenghuniController@delete')->name('delete');

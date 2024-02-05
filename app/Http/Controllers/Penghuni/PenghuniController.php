@@ -43,9 +43,8 @@ class PenghuniController extends Controller
             $result->status            = $this->statusLabel($result->status_pemilik);
             $result->action            = '
             <a href="' . route('penghuni.dtl', $result->code) . '" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
-            <a href="' . route('penghuni.edit', $result->code) . '" class="btn btn-sm btn-warning"><i class="fa fa-pencil"></i></a>
             <a href="#" class="btn btn-sm btn-danger" onclick="deleteData(this, \'' . $result->code . '\')"><i class="fa fa-trash"></i></a>
-';
+            ';
         }
 
         $json_data = array(
@@ -54,7 +53,7 @@ class PenghuniController extends Controller
             "recordsFiltered" => intval($totalFiltered),
             "data"            => $data
         );
-        return json_encode($json_data);
+        return json_encode($json_data, true);
     }
 
     public function add(request $req) {
@@ -107,6 +106,12 @@ class PenghuniController extends Controller
         }
 
         return json_encode($json_data); 
+    }
+
+    public function dtl($code) {
+        $penghuni = Penghuni::with('getUser')->where('code', $code)->first();
+
+        return view('Penghuni.dtl', compact('penghuni'));
     }
 
     public function delete(request $req, $code)
