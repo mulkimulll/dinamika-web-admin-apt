@@ -114,6 +114,41 @@ class PenghuniController extends Controller
         return view('Penghuni.dtl', compact('penghuni'));
     }
 
+    public function edit(request $req) {
+        $penghuni = Penghuni::where('code', $req->code)->first();
+        $user = User::where('id', $penghuni->user_id)->first();
+
+        try {
+            DB::beginTransaction();
+            $user->update([
+                'username' => $req->username,
+                'name' => $req->nama,
+                'email' => $req->email,
+            ]);
+
+            $penghuni->update([
+                'nama' => $req->nama,
+                'tmpt_lahir' => $req->tmpt_lahir,
+                'tgl_lahir' => $req->tgl_lahir,
+                'agama' => $req->agama,
+            ]);
+
+            DB::commit();
+            $json_data = array(
+                "success"         => TRUE,
+                "message"         => 'Data berhasil disimpan.'
+            );
+        } catch (\Throwable $th) {
+            DB::rollback();
+            $json_data = array(
+                "success"         => FALSE,
+                "message"         => 'Gagal.'. $th->getMessage()
+            );
+        }
+
+        return json_encode($json_data); 
+    }
+
     public function delete(request $req, $code)
     {
         try {

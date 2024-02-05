@@ -30,7 +30,8 @@
                 </li>
 
                 <li>
-                    <a href="{{ route('parkir.index') }}" class="waves-effect"><i class="ti-car"></i><span> Parkir Kendaraan
+                    <a href="{{ route('parkir.index') }}" class="waves-effect"><i class="ti-car"></i><span> Parkir
+                            Kendaraan
                         </span></a>
                 </li>
 
