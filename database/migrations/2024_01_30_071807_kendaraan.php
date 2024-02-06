@@ -18,6 +18,9 @@ class Kendaraan extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('plat_nomor');
             $table->string('status');
+            $table->string('jns_kendaraan');
+            $table->string('merk');
+            $table->string('foto_stnk');
             $table->date('tgl_aktif');
             $table->date('tgl_nonaktif');
             $table->timestamps();
