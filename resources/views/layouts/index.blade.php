@@ -24,9 +24,10 @@
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css">
-    {{-- sweeetalert --}}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.4/dist/sweetalert2.min.css">
-    
+    <!-- Sweet Alert -->
+    <link href="{{ asset('assets/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet">
+
     @yield('css')
 </head>
 
@@ -81,13 +82,15 @@
     <script src="{{ asset('assets/plugins/datatables/dataTables.bootstrap.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables/responsive.bootstrap.min.js') }}"></script>
+    <!-- Select2 -->
+    <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
 
     <script src="{{ asset('assets/pages/dashborad.js') }}"></script>
 
     <script src="{{ asset('assets/js/app.js') }}"></script>
 
-    {{-- sweetalert --}}
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.4/dist/sweetalert2.all.min.js"></script>
+    <!-- Sweet alert -->
+    <script src="{{ asset('assets/plugins/sweetalert/sweetalert.js') }}"></script>
 
     @yield('js')
 </body>

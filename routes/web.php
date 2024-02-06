@@ -48,6 +48,10 @@ Route::group(['prefix' => 'gedung', 'as' => 'gedung.'], function () {
 // parkir
 Route::group(['prefix' => 'parkir', 'as' => 'parkir.'], function () {
     Route::get('/', 'Parkir\ParkirController@index')->name('index');
+    Route::get('/dtl/{id}', 'Parkir\ParkirController@dtl')->name('dtl');
+    Route::post('/getdata', 'Parkir\ParkirController@getdata')->name('getdata');
+    Route::post('/add', 'Parkir\ParkirController@add')->name('add');
+    Route::delete('/delete/{id?}', 'Parkir\ParkirController@delete')->name('delete');
 
 });
 
