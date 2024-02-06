@@ -26,7 +26,7 @@
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet" type="text/css">
     <!-- Sweet Alert -->
     <link href="{{ asset('assets/plugins/sweetalert/sweetalert.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/plugins/select2/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/plugins/select2/bootstrap-select.css') }}" rel="stylesheet">
 
     @yield('css')
 </head>
@@ -83,7 +83,7 @@
     <script src="{{ asset('assets/plugins/datatables/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('assets/plugins/datatables/responsive.bootstrap.min.js') }}"></script>
     <!-- Select2 -->
-    <script src="{{ asset('assets/plugins/select2/select2.full.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/select2/bootstrap-select.js') }}"></script>
 
     <script src="{{ asset('assets/pages/dashborad.js') }}"></script>
 

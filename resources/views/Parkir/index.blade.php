@@ -65,8 +65,9 @@
                     <form id="saveDataForm" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <div class="form-group">
-                            <label for="">Nama Penghuni</label>
-                            <select name="user_id" id="select2" style="width: 100%" required>
+                            <label for="user_id">Nama Penghuni</label>
+                            <select name="user_id" class="selectpicker form-control" data-live-search="true" required>
+                                <option value="" disabled selected>-- Pilih --</option>
                                 @foreach ($penghuni as $item)
                                     <option value="{{ $item->user_id }}">{{ $item->nama }} - {{ $item->code }}</option>
                                 @endforeach
@@ -79,6 +80,10 @@
                                 <option value="motor">Motor</option>
                                 <option value="mobil">Mobil</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="">Merk Mobil</label>
+                            <input name="merk" type="text" class="form-control" placeholder="Toyota Avanza" required>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
@@ -159,7 +164,6 @@
         }
 
         $(document).ready(function() {
-            $('#select2').select2();
             // $(".btn-refresh").click(function() {
             //     table.ajax.reload();
             // });

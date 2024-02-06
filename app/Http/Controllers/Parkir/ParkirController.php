@@ -62,6 +62,7 @@ class ParkirController extends Controller
             $kendaraan->plat_nomor = $req->plat_nomor;
             $kendaraan->status = '1';
             $kendaraan->jns_kendaraan = $req->jns_kendaraan;
+            $kendaraan->merk = $req->merk;
             $kendaraan->tgl_aktif = date('Y-m-d');
             $kendaraan->tgl_nonaktif = $req->tgl_nonaktif;
 
