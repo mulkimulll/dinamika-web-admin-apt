@@ -58,7 +58,9 @@ class PenghuniController extends Controller
 
     public function add(request $req) {
         $username = explode(" ", $req->nama)[0];
-        $last = Penghuni::max('code') ?? 0;
+        $penghuni = Penghuni::select('code')->orderBy('created_at', 'DESC')->first();
+        $last_get_penghuni =  explode('-',$penghuni->code)[4];
+        $last = $last_get_penghuni ?? 0;
 
         try {
             DB::beginTransaction();
@@ -99,6 +101,7 @@ class PenghuniController extends Controller
             );
         } catch (\Throwable $th) {
             DB::rollback();
+            return $th;
             $json_data = array(
                 "success"         => FALSE,
                 "message"         => 'Gagal.'. $th->getMessage()
