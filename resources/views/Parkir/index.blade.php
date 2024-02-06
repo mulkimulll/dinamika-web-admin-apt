@@ -202,11 +202,11 @@
                         "className": "text-center"
                     },
                     {
-                        "data": "aktif"
-                    },
-                    {
                         "data": "status",
                         "className": "text-center"
+                    },
+                    {
+                        "data": "aktif"
                     },
                     {
                         "data": "action"
