@@ -23,6 +23,8 @@ Route::get('/logout', 'HomeController@logout')->name('logout');
 
 // dashboard
 Route::get('/dashboard', 'Dashboard\DashboardController@index')->name('dashboard');
+Route::get('/datachart', 'Dashboard\DashboardController@chartdatapenghuni')->name('chart.penghuni');
+Route::get('/datachartpie', 'Dashboard\DashboardController@chartdataparkir')->name('chart.parkir');
 
 // penghuni
 Route::group(['prefix' => 'penghuni', 'as' => 'penghuni.'], function () {
@@ -48,6 +50,7 @@ Route::group(['prefix' => 'gedung', 'as' => 'gedung.'], function () {
 // parkir
 Route::group(['prefix' => 'parkir', 'as' => 'parkir.'], function () {
     Route::get('/', 'Parkir\ParkirController@index')->name('index');
+    Route::get('/member-master', 'Parkir\ParkirController@index_member')->name('index.member');
     Route::get('/dtl/{id}', 'Parkir\ParkirController@dtl')->name('dtl');
     Route::post('/getdata', 'Parkir\ParkirController@getdata')->name('getdata');
     Route::post('/add', 'Parkir\ParkirController@add')->name('add');

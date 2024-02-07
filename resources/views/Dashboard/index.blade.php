@@ -28,8 +28,9 @@
                         <h4 class="panel-title" style="color: #fff;">Penghuni</h4>
                     </div>
                     <div class="panel-body">
-                        <h3 class="">734</h3>
-                        <p class="text-muted">Total Penghuni <br><a href="penghuni.html"><i class="ti-arrow-right"></i> List
+                        <h3 class="">{{ $tp }}</h3>
+                        <p class="text-muted">Total Penghuni <br><a href="{{ route('penghuni.index') }}"><i
+                                    class="ti-arrow-right"></i> List
                                 Penghuni</a></p>
                     </div>
                 </div>
@@ -41,8 +42,9 @@
                         <h4 class="panel-title" style="color: #fff;">Available Parking Member</h4>
                     </div>
                     <div class="panel-body">
-                        <h3 class=""><b>100+</b></h3>
-                        <p class="text-muted">Total Parkir Terisi <br><a href="parking.html"><i class="ti-arrow-right"></i>
+                        <h3 class=""><b>{{ $tparkir }}</b></h3>
+                        <p class="text-muted">Total Parkir Terisi <br><a href="{{ route('parkir.index') }}"><i
+                                    class="ti-arrow-right"></i>
                                 List Parkiran</a></p>
                     </div>
                 </div>
@@ -234,7 +236,7 @@
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         // Initialize the echarts instance based on the prepared dom
         var penghuniChart = echarts.init(document.getElementById('main'));
         var parkirChart = echarts.init(document.getElementById('main1'));
@@ -243,14 +245,14 @@
         var dataPenghuni = {
             tooltip: {},
             legend: {
-                data: ['Appartment Bintaro']
+                data: ['Apartment Sentra Timur']
             },
             xAxis: {
                 data: ['Tower A', 'Tower B', 'Tower C', 'Tower D', 'Tower E']
             },
             yAxis: {},
             series: [{
-                name: 'Appartment Bintaro',
+                name: 'Apartment Sentra Timur',
                 type: 'bar',
                 data: [5, 20, 36, 10, 10]
             }]
@@ -319,5 +321,95 @@
         // Display the chart using the configuration items and data just specified.
         penghuniChart.setOption(dataPenghuni);
         parkirChart.setOption(dataParkir);
+    </script> --}}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/datachart')
+                .then(response => response.json())
+                .then(data => {
+                    renderChart(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+            fetch('/datachartpie')
+                .then(response => response.json())
+                .then(data => {
+                    renderChartPie(data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+
+        function renderChart(data) {
+            const chart = echarts.init(document.getElementById('main'));
+
+            const options = {
+                tooltip: {},
+                legend: {
+                    data: ['Apartment Sentra Timur']
+                },
+                xAxis: {
+                    type: 'category',
+                    data: data.map(entry => entry.nama)
+                },
+                yAxis: {},
+                series: [{
+                    name: 'Apartment Sentra Timur',
+                    data: data.map(entry => entry.total_penghuni),
+                    type: 'bar'
+                }]
+            };
+
+            chart.setOption(options);
+        }
+
+        function renderChartPie(data) {
+            console.log(data);
+            const chart = echarts.init(document.getElementById('main1'));
+
+            const options = {
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    top: '5%',
+                    left: 'center'
+                },
+                series: [{
+                    type: 'pie',
+                    radius: ['40%', '70%'],
+                    avoidLabelOverlap: false,
+                    itemStyle: {
+                        borderRadius: 10,
+                        borderColor: '#fff',
+                        borderWidth: 2
+                    },
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: 40,
+                            fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: data.map(entry => ({
+                        name: entry.nama,
+                        value: entry.value
+                    }))
+                }]
+            };
+
+            chart.setOption(options);
+        }
     </script>
 @endsection
