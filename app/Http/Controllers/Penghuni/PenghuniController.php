@@ -25,7 +25,8 @@ class PenghuniController extends Controller
         $start = $req->start;
         $page  = $start + 1;
 
-        $dataquery  = Penghuni::select("penghuni.*");
+        $dataquery  = Penghuni::with('getGedung')->select("penghuni.*");
+        // return $dataquery->get();
 
         $totalData = $dataquery->get()->count();
 
@@ -38,7 +39,7 @@ class PenghuniController extends Controller
             $result->no                = $key + $page;
             $result->code              = $result->code;
             $result->nama              = $result->nama;
-            $result->alamat            = $result->tower .'lt.'. $result->lantai.'room.'. $result->room;
+            $result->alamat            = $result->getGedung->nama .' / lt.'. $result->lantai.' / room.'. $result->room;
             $result->created_at        = $result->created_at;
             $result->status            = $this->statusLabel($result->status_pemilik);
             $result->action            = '

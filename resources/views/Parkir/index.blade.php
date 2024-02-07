@@ -67,7 +67,7 @@
                         <div class="form-group">
                             <label for="user_id">Nama Penghuni</label>
                             <select name="user_id" class="selectpicker form-control" data-live-search="true" required>
-                                <option value="" disabled selected>-- Pilih --</option>
+                                <option value="" selected>-- Pilih --</option>
                                 @foreach ($penghuni as $item)
                                     <option value="{{ $item->user_id }}">{{ $item->nama }} - {{ $item->code }}</option>
                                 @endforeach
@@ -82,7 +82,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="">Merk Mobil</label>
+                            <label for="">Merk Kendaraan</label>
                             <input name="merk" type="text" class="form-control" placeholder="Toyota Avanza" required>
                         </div>
                         <div class="row">
