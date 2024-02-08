@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Penghuni;
 use App\Models\Kendaraan;
 use App\Models\Gedung;
+use App\Models\Transaction;
 use DB;
 
 class DashboardController extends Controller
@@ -15,10 +16,40 @@ class DashboardController extends Controller
         $tp = Penghuni::select('penghuni.id')->get()->count();
         $tparkir = Kendaraan::select('kendaraan.id')->get()->count();
 
-        $datajs = Gedung::select('nama')->get();
-        $resultjs = Gedung::withCount(['getPenghuni as total_penghuni'])->get();
+        return view('Dashboard.index', compact('tp', 'tparkir'));
+    }
 
-        return view('Dashboard.index', compact('tp', 'tparkir','datajs'));
+    public function getDataRiwayat(request $req) {
+        $limit = $req->length;
+        $start = $req->start;
+        $page  = $start + 1;
+
+        $dataquery  = Transaction::with('getUser');
+
+        $totalData = $dataquery->get()->count();
+
+        $totalFiltered = $dataquery->get()->count();
+
+        $dataquery->limit($limit);
+        $data = $dataquery->get();
+
+        foreach ($data as $key => $result) {
+            $result->no                = $key + $page;
+            $result->code              = $result->getUser->code;
+            $result->nama              = $result->getUser->nama;
+            $result->alamat            = $result->tower .'lt.'. $result->total_lantai.'room.'. $result->total_room;
+            $result->description       = $result->description;
+            $result->created_at        = $result->created_at;
+            $result->status            = $result->status;
+        }
+
+        $json_data = array(
+            "draw"            => intval($req->input('draw')),
+            "recordsTotal"    => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data"            => $data
+        );
+        return json_encode($json_data);
     }
 
     public function chartdatapenghuni()

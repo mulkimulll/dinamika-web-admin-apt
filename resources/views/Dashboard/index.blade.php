@@ -97,7 +97,6 @@
                     </div>
                     <div class="panel-body">
                         <div id="main1" style="width: 600px;height:400px;"></div>
-                        <!-- <div id="morris-line-example" style="height: 300px"></div> -->
                     </div>
                 </div>
             </div> <!-- col -->
@@ -111,7 +110,7 @@
                         <h3 class="panel-title">Riwayat Transaksi</h3>
                     </div>
                     <div class="panel-body">
-                        <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap"
+                        <table id="table1" class="table table-striped table-bordered dt-responsive nowrap"
                             cellspacing="0" width="100%">
                             <thead>
                                 <tr>
@@ -124,102 +123,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>00001</td>
-                                    <td>Sahidi</td>
-                                    <td>Tower B, lt. 20, room 001</td>
-                                    <td>Pembayaran IPL</td>
-                                    <td>10-12-2023</td>
-                                    <td><span class="badge badge-success">Sukses</span></td>
-                                </tr>
-                                <tr>
-                                    <td>00001</td>
-                                    <td>Sahidi</td>
-                                    <td>Tower B, lt. 20, room 001</td>
-                                    <td>Pembayaran Air</td>
-                                    <td>10-12-2023</td>
-                                    <td><span class="badge badge-success">Sukses</span></td>
-                                </tr>
-                                <tr>
-                                    <td>00002</td>
-                                    <td>Andy</td>
-                                    <td>Tower B, lt. 20, room 002</td>
-                                    <td>Pembayaran IPL</td>
-                                    <td>10-12-2023</td>
-                                    <td><span class="badge badge-success">Sukses</span></td>
-                                </tr>
-                                <tr>
-                                    <td>00002</td>
-                                    <td>Andy</td>
-                                    <td>Tower B, lt. 20, room 002</td>
-                                    <td>Pembayaran Air</td>
-                                    <td>10-12-2023</td>
-                                    <td><span class="badge badge-success">Sukses</span></td>
-                                </tr>
-                                <tr>
-                                    <td>00003</td>
-                                    <td>Adul</td>
-                                    <td>Tower B, lt. 1, room 001</td>
-                                    <td>Pembayaran IPL</td>
-                                    <td>10-12-2023</td>
-                                    <td><span class="badge badge-success">Sukses</span></td>
-                                </tr>
-                                <tr>
-                                    <td>00003</td>
-                                    <td>Adul</td>
-                                    <td>Tower B, lt. 1, room 001</td>
-                                    <td>Pembayaran Air</td>
-                                    <td>10-12-2023</td>
-                                    <td><span class="badge badge-success">Sukses</span></td>
-                                </tr>
-                                <tr>
-                                    <td>00004</td>
-                                    <td>Bedu</td>
-                                    <td>Tower B, lt. 1 room 002</td>
-                                    <td>Pembayaran IPL</td>
-                                    <td>10-12-2023</td>
-                                    <td><span class="badge badge-success">Sukses</span></td>
-                                </tr>
-                                <tr>
-                                    <td>00004</td>
-                                    <td>Bedu</td>
-                                    <td>Tower B, lt. 1 room 002</td>
-                                    <td>Pembayaran Air</td>
-                                    <td>10-12-2023</td>
-                                    <td><span class="badge badge-success">Sukses</span></td>
-                                </tr>
-                                <tr>
-                                    <td>00005</td>
-                                    <td>Burhan</td>
-                                    <td>Tower B, lt. 2 room 001</td>
-                                    <td>Pembayaran IPL</td>
-                                    <td>10-12-2023</td>
-                                    <td><span class="badge badge-success">Sukses</span></td>
-                                </tr>
-                                <tr>
-                                    <td>00005</td>
-                                    <td>Burhan</td>
-                                    <td>Tower B, lt. 2 room 001</td>
-                                    <td>Pembayaran Air</td>
-                                    <td>10-12-2023</td>
-                                    <td><span class="badge badge-success">Sukses</span></td>
-                                </tr>
-                                <tr>
-                                    <td>00006</td>
-                                    <td>Alex</td>
-                                    <td>Tower B, lt. 22 room 001</td>
-                                    <td>Pembayaran IPL</td>
-                                    <td>10-12-2023</td>
-                                    <td><span class="badge badge-success">Sukses</span></td>
-                                </tr>
-                                <tr>
-                                    <td>00006</td>
-                                    <td>Alex</td>
-                                    <td>Tower B, lt. 22 room 001</td>
-                                    <td>Pembayaran Air</td>
-                                    <td>10-12-2023</td>
-                                    <td><span class="badge badge-success">Sukses</span></td>
-                                </tr>
+
                             </tbody>
                         </table>
 
@@ -236,92 +140,86 @@
 
 @section('js')
     <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
-    {{-- <script type="text/javascript">
-        // Initialize the echarts instance based on the prepared dom
-        var penghuniChart = echarts.init(document.getElementById('main'));
-        var parkirChart = echarts.init(document.getElementById('main1'));
 
-        // Specify the configuration items and data for the chart
-        var dataPenghuni = {
-            tooltip: {},
-            legend: {
-                data: ['Apartment Sentra Timur']
-            },
-            xAxis: {
-                data: ['Tower A', 'Tower B', 'Tower C', 'Tower D', 'Tower E']
-            },
-            yAxis: {},
-            series: [{
-                name: 'Apartment Sentra Timur',
-                type: 'bar',
-                data: [5, 20, 36, 10, 10]
-            }]
-        };
+    <script type="text/javascript">
+        var table, tabledata, table_index;
 
-        dataParkir = {
-            tooltip: {
-                trigger: 'item'
-            },
-            legend: {
-                top: '5%',
-                left: 'center'
-            },
-            series: [{
-                name: 'Access From',
-                type: 'pie',
-                radius: ['40%', '70%'],
-                avoidLabelOverlap: false,
-                itemStyle: {
-                    borderRadius: 10,
-                    borderColor: '#fff',
-                    borderWidth: 2
+        $(document).ready(function() {
+
+            $.ajaxSetup({
+                headers: {
+                    "X-CSRF-Token": $("meta[name=csrf-token]").attr("content")
+                }
+            });
+
+            table = $('#table1').DataTable({
+                fixedColumns: {
+                    left: 2
                 },
-                label: {
-                    show: false,
-                    position: 'center'
-                },
-                emphasis: {
-                    label: {
-                        show: true,
-                        fontSize: 40,
-                        fontWeight: 'bold'
+                "pageLength": "10",
+                "lengthMenu": [
+                    [10, 25, 50, 100],
+                    [10, 25, 50, 100]
+                ],
+                "ajax": {
+                    "url": "{{ route('dashboard.getdata.history') }}",
+                    "dataType": "json",
+                    "type": "POST",
+                    data: function(d) {
+                        d._token = "{{ csrf_token() }}";
                     }
                 },
-                labelLine: {
-                    show: false
+                "columns": [{
+                        "data": "code"
+                    },
+                    {
+                        "data": "nama"
+                    },
+                    {
+                        "data": "alamat"
+                    },
+                    {
+                        "data": "description"
+                    },
+                    {
+                        "data": "created_at"
+                    },
+                    {
+                        "data": "status"
+                    },
+                ],
+                responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                language: {
+                    search: "_INPUT_",
+                    searchPlaceholder: "Cari data",
+                    emptyTable: "Belum ada data",
+                    info: "Menampilkan data _START_ sampai _END_ dari _MAX_ data.",
+                    infoEmpty: "Menampilkan 0 sampai 0 dari 0 data.",
+                    lengthMenu: "Tampilkan _MENU_ data per halaman",
+                    loadingRecords: "Loading...",
+                    processing: "Mencari...",
+                    paginate: {
+                        "first": "Pertama",
+                        "last": "Terakhir",
+                        "next": "Sesudah",
+                        "previous": "Sebelum"
+                    },
                 },
-                data: [{
-                        value: 1048,
-                        name: 'Tower A'
+                buttons: [{
+                        extend: 'copy',
+                        exportOptions: {
+                            orthogonal: 'export'
+                        },
+                        header: true,
+                        footer: true,
+                        className: 'btn bg-default text-black',
                     },
-                    {
-                        value: 735,
-                        name: 'Tower B'
-                    },
-                    {
-                        value: 580,
-                        name: 'Tower C'
-                    },
-                    {
-                        value: 484,
-                        name: 'Tower D'
-                    },
-                    {
-                        value: 300,
-                        name: 'Tower E'
-                    }
+
                 ]
-            }]
-        };
-        // Ukuran grafik akan menyesuaikan dengan lebar kontainer
-        window.addEventListener('resize', function() {
-            penghuniChart.resize();
+            });
         });
-
-        // Display the chart using the configuration items and data just specified.
-        penghuniChart.setOption(dataPenghuni);
-        parkirChart.setOption(dataParkir);
-    </script> --}}
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

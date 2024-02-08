@@ -25,6 +25,7 @@ Route::get('/logout', 'HomeController@logout')->name('logout');
 Route::get('/dashboard', 'Dashboard\DashboardController@index')->name('dashboard');
 Route::get('/datachart', 'Dashboard\DashboardController@chartdatapenghuni')->name('chart.penghuni');
 Route::get('/datachartpie', 'Dashboard\DashboardController@chartdataparkir')->name('chart.parkir');
+Route::post('/data-transaction', 'Dashboard\DashboardController@getDataRiwayat')->name('dashboard.getdata.history');
 
 // penghuni
 Route::group(['prefix' => 'penghuni', 'as' => 'penghuni.'], function () {
