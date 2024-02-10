@@ -6,16 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Kendaraan;
 use App\Models\Penghuni;
+use App\Models\MasterParkir;
 use DB;
 
 class ParkirController extends Controller
 {
+    // function parkir
     public function index() {
         $penghuni = Penghuni::select('user_id','nama', 'code')->get();
 
         return view('Parkir.index', compact('penghuni'));
     }
-
+    
     public function getdata(request $req) {
         $limit = $req->length;
         $start = $req->start;
@@ -117,5 +119,70 @@ class ParkirController extends Controller
         }
         
         return $data;
+    }
+
+    // member master parkir
+    public function indexMember() {
+        $master = MasterParkir::all();
+
+        return view('Parkir.Master.index', compact('master'));
+    }
+
+    public function getdataMember(request $req) {
+        $limit = $req->length;
+        $start = $req->start;
+        $page  = $start + 1;
+
+        $dataquery  = MasterParkir::select('*');
+
+        $totalData = $dataquery->get()->count();
+
+        $totalFiltered = $dataquery->get()->count();
+
+        $dataquery->limit($limit);
+        $data = $dataquery->get();
+
+        foreach ($data as $key => $result) {
+            $result->no                = $key + $page;
+            $result->kategori          = $result->kategori;
+            $result->harga             = $result->harga;
+            $result->action            = '
+            <a href="' . route('parkir.dtl', $result->getPenghuni->code) . '" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+            <a href="#" class="btn btn-sm btn-danger" onclick="deleteData(this, \'' . $result->id . '\')"><i class="fa fa-trash"></i></a>
+            ';
+        }
+
+        $json_data = array(
+            "draw"            => intval($req->input('draw')),
+            "recordsTotal"    => intval($totalData),
+            "recordsFiltered" => intval($totalFiltered),
+            "data"            => $data
+        );
+        return json_encode($json_data);
+    }
+
+    public function addMember(request $req) {
+
+        try {
+            DB::beginTransaction();
+            $kendaraan = new MemberParkir;
+            $kendaraan->kategori = $req->kategori;
+            $kendaraan->harga = $req->harga;
+            $kendaraan->save();
+            
+            DB::commit();
+            $json_data = array(
+                "success"         => TRUE,
+                "message"         => 'Data berhasil disimpan.'
+            );
+        } catch (\Throwable $th) {
+            DB::rollback();
+            $json_data = array(
+                "success"         => FALSE,
+                "message"         => 'Gagal.'. $th->getMessage()
+            );
+        }
+
+        return json_encode($json_data); 
     }
 }

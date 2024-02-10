@@ -56,7 +56,10 @@ Route::group(['prefix' => 'parkir', 'as' => 'parkir.'], function () {
     Route::post('/getdata', 'Parkir\ParkirController@getdata')->name('getdata');
     Route::post('/add', 'Parkir\ParkirController@add')->name('add');
     Route::delete('/delete/{id?}', 'Parkir\ParkirController@delete')->name('delete');
-
+    
+    Route::get('/master-member', 'Parkir\ParkirController@indexMember')->name('member.index');
+    Route::post('/master-member/getdata', 'Parkir\ParkirController@getdataMember')->name('member.getdata');
+    Route::post('/add-master-member', 'Parkir\ParkirController@addMember')->name('member.add');
 });
 
 // pengaduan
