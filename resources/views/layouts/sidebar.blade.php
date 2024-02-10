@@ -51,7 +51,8 @@
                 </li>
 
                 <li>
-                    <a href="pengaduan.html" class="waves-effect"><i class="ti-wallet"></i><span> Pengaduan
+                    <a href="{{ route('pengaduan.index') }}" class="waves-effect"><i class="ti-wallet"></i><span>
+                            Pengaduan
                         </span></a>
                 </li>
             </ul>

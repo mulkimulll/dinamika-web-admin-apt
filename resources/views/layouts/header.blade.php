@@ -3,8 +3,8 @@
     <!-- LOGO -->
     <div class="topbar-left">
         <div class="text-center">
-            <a href="index.html" class="logo">Bintaro Apartment</a>
-            <a href="index.html" class="logo-sm">BA</a>
+            <a href="index.html" class="logo" style="font-size: 13px;">Sentra Timur Apartment</a>
+            <a href="index.html" class="logo-sm">STA</a>
         </div>
     </div>
     <!-- Button mobile view to collapse sidebar menu -->

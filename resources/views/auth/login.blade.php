@@ -42,7 +42,7 @@
                 <h3 class="text-center m-t-0 m-b-30">
                     <span class="">
                         <!-- <img src="assets/images/logo_dark.png" alt="logo" height="32"> -->
-                        <h3>Admin Apartment Bintaro</h3>
+                        <h3>Admin Apartment Sentra Timur</h3>
                     </span>
                 </h3>
                 <h4 class="text-muted text-center m-t-0"><b>Sign In</b></h4>

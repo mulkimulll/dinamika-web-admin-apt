@@ -59,4 +59,15 @@ Route::group(['prefix' => 'parkir', 'as' => 'parkir.'], function () {
 
 });
 
+// pengaduan
+Route::group(['prefix' => 'pengaduan', 'as' => 'pengaduan.'], function () {
+    Route::get('/', 'Pengaduan\PengaduanController@index')->name('index');
+    // Route::get('/member-master', 'Parkir\ParkirController@index_member')->name('index.member');
+    // Route::get('/dtl/{id}', 'Parkir\ParkirController@dtl')->name('dtl');
+    Route::post('/getdata', 'Pengaduan\PengaduanController@getdata')->name('getdata');
+    // Route::post('/add', 'Parkir\ParkirController@add')->name('add');
+    // Route::delete('/delete/{id?}', 'Parkir\ParkirController@delete')->name('delete');
+
+});
+
 
