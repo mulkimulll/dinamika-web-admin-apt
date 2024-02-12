@@ -36,11 +36,12 @@ class PenghuniController extends Controller
         $data = $dataquery->get();
 
         foreach ($data as $key => $result) {
+            // $created_at = Carbon::parse($result->created_at);
             $result->no                = $key + $page;
             $result->code              = $result->code;
             $result->nama              = $result->nama;
             $result->alamat            = $result->getGedung->nama .' / lt.'. $result->lantai.' / room.'. $result->room;
-            $result->created_at        = $result->created_at;
+            $result->tgl               = Carbon::parse($result->created_at)->format('d-m-Y');
             $result->status            = $this->statusLabel($result->status_pemilik);
             $result->action            = '
             <a href="' . route('penghuni.dtl', $result->code) . '" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
